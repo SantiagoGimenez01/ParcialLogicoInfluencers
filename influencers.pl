@@ -46,6 +46,7 @@ esOmnipresente(Usuario):-
     forall(existeRed(Red), tieneCanal(Usuario, canal(Red, _))).
 
 esExclusivo(Usuario):-
+    esInfluencer(Usuario),
     tieneCanal(Usuario, canal(Red, _)),
     not((tieneCanal(Usuario, canal(OtraRed, _)), OtraRed \= Red)).
 
@@ -108,8 +109,9 @@ contenidoAdictivo(foto(Personas)):-
 colaboran(Uno, Otro):-
     publico(Uno, _, Contenido),
     aparece(Otro, Contenido).
-colaboran(Otro, Uno):- 
-    colaboran(Uno, Otro).
+colaboran(Uno, Otro):- 
+    publico(Otro, _, Contenido),
+    aparece(Uno, Contenido).
 
 aparece(Persona, video(Personas, _)):-
     member(Persona, Personas).
